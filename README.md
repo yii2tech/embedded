@@ -86,6 +86,90 @@ $user->comments[] = $comment;
 Each embedded mapping may have additional options specified. Please refer to [[\yii2tech\embedded\Mapping]] for more details.
 
 
+## Processing embedded objects <span id="processing-embedded-objects"></span>
+
+Embedded feature is similar to regular ActiveRecord relation feature. Their declaration and processing are similar
+and have similar specifics and limitations.
+All embedded objects are lazy loaded. This means they will not be created until first demand. This saves memory
+but may produce unexpected results at some point.
+By default, once embedded object is instantiated its source attribute will be unset in order to save memory usage.
+You can control this behavior via [[\yii2tech\embedded\Mapping::unsetSource]].
+
+Embedded objects allow simplification of nested data processing, but usually they know nothing about their source
+data meaning and global processing. For example: nested object is not aware if its source data comes from database
+and it does not know how this data should saved. Such functionality usually is handled by container object.
+Thus at some point you will need to convert data from embedded objects back to its raw format, which allows its
+native processing like saving. This can be done using method `refreshFromEmbedded()`:
+
+```php
+use yii\base\Model;
+use yii2tech\embedded\ContainerInterface;
+use yii2tech\embedded\ContainerTrait;
+
+class User extends Model implements ContainerInterface
+{
+    use ContainerTrait;
+
+    public $profileData = [
+        'firstName' => 'Unknown',
+        'lastName' => 'Unknown',
+    ];
+
+    public function embedProfile()
+    {
+        return $this->mapEmbedded('profileData', Profile::className());
+    }
+}
+
+$user = new User();
+var_dump($user->profileData); // outputs array: ['firstName' => 'Unknown', 'lastName' => 'Unknown']
+
+$user->profile->firstName = 'John';
+$user->profile->lastName = 'Doe';
+
+var_dump($user->profileData); // outputs empty array
+
+$user->refreshFromEmbedded();
+var_dump($user->profileData); // outputs array: ['firstName' => 'John', 'lastName' => 'Doe']
+```
+
+While embedding list of objects (using [[\yii2tech\embedded\ContainerTrait::mapEmbeddedList()]]) the produced
+virtual field will be not an array, but an object, which satisfies [[\ArrayAccess]] interface. Thus all manipulations
+with such property (even if it may look like using array) will affect container object.
+For example:
+
+```php
+use yii\base\Model;
+use yii2tech\embedded\ContainerInterface;
+use yii2tech\embedded\ContainerTrait;
+
+class User extends Model implements ContainerInterface
+{
+    use ContainerTrait;
+
+    public $commentsData = [];
+
+    public function embedComments()
+    {
+        return $this->mapEmbeddedList('commentsData', Comment::className());
+    }
+}
+
+$user = new User();
+// ...
+
+$comments = $user->comments; // not a copy of array - copy of object reference!
+foreach ($comments as $key => $comment) {
+    if (...) {
+        unset($comments[$key]); // unsets `$user->comments[$key]`!
+    }
+}
+
+$comments = clone $user->comments; // creates a copy of list, but not a copy of contained objects!
+$comments[0]->title = 'new value'; // actually sets `$user->comments[0]->title`!
+```
+
+
 ## Validating embedded models <span id="validating-embedded-models"></span>
 
 Each embedded model should declare its own validation rules and, in general, should be validated separately.
@@ -129,6 +213,40 @@ $user = new User();
 if ($user->populate(Yii::$app->request->post()) && $user->contact->populate(Yii::$app->request->post())) {
     if ($user->validate()) { // automatically validates 'contact' as well
         // ...
+    }
+}
+```
+
+
+## Predefined model classes <span id="predefined-model-classes"></span>
+
+This extension is generic and may be applied to any model with complex attributes. However, to simplify integration with
+common solutions several base classes are provided by this extension:
+ - [[\yii2tech\embedded\mongodb\ActiveRecord]] - MongoDB ActiveRecord with embedded feature built-in
+ - [[\yii2tech\embedded\mongodb\ActiveRecordFile]] - MongoDB GridFS ActiveRecord with embedded feature built-in
+ - [[\yii2tech\embedded\elasticsearch\ActiveRecord]] - ElasticSearch ActiveRecord with embedded feature built-in
+
+Provided ActiveRecord classes already implement [[\yii2tech\embedded\ContainerInterface]] and invoke `refreshFromEmbedded()`
+on `beforeSave()` stage.
+For example, if you are using MongoDB and wish to work with sub-documents, you may simply switch extending from
+regular [[\yii\mongodb\ActiveRecord]] to [[\yii2tech\embedded\mongodb\ActiveRecord]]:
+
+```php
+class User extends \yii2tech\embedded\mongodb\ActiveRecord
+{
+    public static function collectionName()
+    {
+        return 'customer';
+    }
+
+    public function attributes()
+    {
+        return ['_id', 'name', 'email', 'addressData', 'status'];
+    }
+
+    public function embedAddress()
+    {
+        return $this->mapEmbedded('addressData', UserAddress::className());
     }
 }
 ```
