@@ -40,12 +40,12 @@ use Yii;
  *
  *     public function embedProfile()
  *     {
- *         return $this->mapEmbedded('profileData', 'Profile');
+ *         return $this->mapEmbedded('profileData', Profile::className());
  *     }
  *
  *     public function embedComments()
  *     {
- *         return $this->mapEmbeddedList('commentsData', 'Comment');
+ *         return $this->mapEmbeddedList('commentsData', Comment::className());
  *     }
  * }
  *
