@@ -1,7 +1,7 @@
 {
     "name": "yii2tech/embedded",
     "description": "Provides support for embedded (nested) models in Yii2",
-    "keywords": ["yii2", "embed", "embedded", "mongo", "mongodb", "elastic", "elasticsearch"],
+    "keywords": ["yii2", "embed", "embedded", "nested", "mongo", "mongodb", "elastic", "elasticsearch"],
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
