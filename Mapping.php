@@ -114,6 +114,9 @@ class Mapping extends Object
 
         if ($this->multiple) {
             $result = new ArrayObject();
+            if ($sourceValue === null) {
+                return $result;
+            }
             foreach ($sourceValue as $key => $frame) {
                 if (!is_array($frame)) {
                     throw new InvalidParamException("Source value for the embedded should be an array.");
