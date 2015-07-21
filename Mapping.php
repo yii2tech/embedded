@@ -111,6 +111,9 @@ class Mapping extends Object
         if ($this->createFromNull && $sourceValue === null) {
             $sourceValue = [];
         }
+        if ($sourceValue === null) {
+            return null;
+        }
 
         if ($this->multiple) {
             $result = new ArrayObject();
@@ -121,9 +124,6 @@ class Mapping extends Object
                 $result[$key] = Yii::createObject(array_merge($targetConfig, $frame));
             }
         } else {
-            if ($sourceValue === null) {
-                return null;
-            }
             if (!is_array($sourceValue)) {
                 throw new InvalidParamException("Source value for the embedded should be an array.");
             }

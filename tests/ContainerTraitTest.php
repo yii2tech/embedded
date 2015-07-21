@@ -166,6 +166,10 @@ class ContainerTraitTest extends TestCase
 
         $this->assertNull($container->null);
         $this->assertTrue(is_object($container->nullAutoCreate));
+
+        $container->listData = null;
+        $this->assertNull($container->nullList);
+        $this->assertTrue(is_object($container->list));
     }
 
     /**

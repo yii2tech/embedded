@@ -12,6 +12,7 @@ use yii2tech\embedded\ContainerTrait;
  * @property Container $self
  * @property \stdClass[] $null
  * @property \stdClass[] $nullAutoCreate
+ * @property \stdClass[]|null $nullList
  */
 class Container extends Object implements ContainerInterface
 {
@@ -45,5 +46,10 @@ class Container extends Object implements ContainerInterface
     public function embedNullAutoCreate()
     {
         return $this->mapEmbedded('nullData', 'stdClass');
+    }
+
+    public function embedNullList()
+    {
+        return $this->mapEmbeddedList('listData', 'stdClass', ['createFromNull' => false]);
     }
 }
