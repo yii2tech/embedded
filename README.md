@@ -177,6 +177,10 @@ However, you may simplify complex model validation using [[\yii2tech\embedded\Va
 For example:
 
 ```php
+use yii\base\Model;
+use yii2tech\embedded\ContainerInterface;
+use yii2tech\embedded\ContainerTrait;
+
 class User extends Model implements ContainerInterface
 {
     use ContainerTrait;
