@@ -65,6 +65,8 @@ class Validator extends \yii\validators\Validator
      * object at least once). This option is disabled by default.
      *
      * @see Mapping::getIsValueInitialized()
+     * 
+     * @since 1.0.1
      */
     public $initializedOnly = false;
 
