@@ -19,6 +19,8 @@ use yii\helpers\ArrayHelper;
  *
  * @see ContainerTrait
  *
+ * @property boolean $isValueInitialized whether embedded value has been already initialized or not.
+ *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
@@ -92,6 +94,15 @@ class Mapping extends Object
             $this->_value = $this->createValue($owner);
         }
         return $this->_value;
+    }
+
+    /**
+     * @return boolean whether embedded value has been already initialized or not.
+     * @since 1.0.1
+     */
+    public function getIsValueInitialized()
+    {
+        return $this->_value !== false;
     }
 
     /**

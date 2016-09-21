@@ -60,6 +60,14 @@ class Validator extends \yii\validators\Validator
      * @var boolean whether to add an error message to embedded source attribute instead of embedded name itself.
      */
     public $addErrorToSource = true;
+    /**
+     * @var boolean whether to run validation only in case embedded model(s) has been already initialized (requested as
+     * object at least once). This option is disabled by default.
+     *
+     * @see Mapping::getIsValueInitialized()
+     */
+    public $initializedOnly = false;
+
 
     /**
      * @inheritdoc
@@ -82,6 +90,11 @@ class Validator extends \yii\validators\Validator
         }
 
         $mapping = $model->getEmbeddedMapping($attribute);
+
+        if ($this->initializedOnly && !$mapping->getIsValueInitialized()) {
+            return;
+        }
+
         $embedded = $model->getEmbedded($attribute);
 
         if ($mapping->multiple) {

@@ -58,6 +58,19 @@ class ValidatorTest extends TestCase
         $model->messages[] = new MessageModel(['content' => 'content 2']);
         $this->assertTrue($model->validate());
     }
+
+    /**
+     * @depends testValidateList
+     */
+    public function testValidateInitializedOnly()
+    {
+        $model = new UserModel();
+
+        $model->validate();
+
+        $this->assertEmpty($model->getErrors('messagesData'));
+        $this->assertNotEmpty($model->getErrors('contactData'));
+    }
 }
 
 /**
@@ -77,7 +90,7 @@ class UserModel extends Model implements ContainerInterface
         return [
             ['name', 'required'],
             ['contact', Validator::className()],
-            ['messages', Validator::className()],
+            ['messages', Validator::className(), 'initializedOnly' => true],
         ];
     }
 
