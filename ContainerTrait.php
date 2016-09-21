@@ -243,6 +243,9 @@ trait ContainerTrait
     {
         $values = [];
         foreach ($this->_embedded as $embedded) {
+            if (!$embedded->getIsValueInitialized()) {
+                continue;
+            }
             $values[$embedded->source] = $embedded->extractValues($this);
         }
         return $values;
