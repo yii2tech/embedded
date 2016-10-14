@@ -93,7 +93,7 @@ and have similar specifics and limitations.
 All embedded objects are lazy loaded. This means they will not be created until first demand. This saves memory
 but may produce unexpected results at some point.
 By default, once embedded object is instantiated its source attribute will be unset in order to save memory usage.
-You can control this behavior via [[\yii2tech\embedded\Mapping::unsetSource]].
+You can control this behavior via [[\yii2tech\embedded\Mapping::$unsetSource]].
 
 Embedded objects allow simplification of nested data processing, but usually they know nothing about their source
 data meaning and global processing. For example: nested object is not aware if its source data comes from database
@@ -196,6 +196,7 @@ class User extends Model implements ContainerInterface
     {
         return [
             ['contact', 'yii2tech\embedded\Validator'],
+            // ...
         ]
     }
 }
@@ -214,9 +215,62 @@ class Contact extends Model
 }
 
 $user = new User();
-if ($user->populate(Yii::$app->request->post()) && $user->contact->populate(Yii::$app->request->post())) {
+if ($user->load(Yii::$app->request->post()) && $user->contact->load(Yii::$app->request->post())) {
     if ($user->validate()) { // automatically validates 'contact' as well
         // ...
+    }
+}
+```
+
+> Note: pay attention that [[\yii2tech\embedded\Validator]] must be set for the embedded model name - not for its
+  source attribute. Do not mix them up.
+
+You can enable [[\yii2tech\embedded\Validator::$initializedOnly]], allowing to skip validation for the embedded model, if
+it has not bee initialized, e.g. requested at least once. This will save the performance in case source model can be used
+in different scenarios, some of which may not require embedded model manipulations. However, in this case embedded source
+attribute value will not be validated. You should ensure it validated in other way or it is 'unsafe' for population via
+[[\yii\base\Model::load()]] method.
+
+
+## Saving embedded models <span id="saving-embedded-models"></span>
+
+Keep in mind that embedded models are stored separately from the source model attributes. You will need to use
+[[\yii2tech\embedded\ContainerInterface::refreshFromEmbedded()]] method in order to populate source model
+attributes with the data from embedded models.
+
+Also note, that attempt to get 'dirty' value for embedded source attribute will also fail until you use `refreshFromEmbedded()`
+even, if embedded model has changed:
+
+```php
+$user = User::findOne(1); // declares embedded model 'contactModel' from attribute 'contactData'
+
+if ($user->contactModel->load(Yii::$app->request->post())) {
+    var_dump($user->isAttributeChanged('contactData')); // outputs `false`
+
+    $user->refreshFromEmbedded();
+    var_dump($user->isAttributeChanged('contactData')); // outputs `true`
+}
+```
+
+In case you are applying 'embedded' functionality to an ActiveRecord class, the best place for the data synchronization
+is [[\yii\db\BaseActiveRecord::beforeSave()]] method. For example, application of this extension to the [[\yii\mongodb\ActiveRecord]]
+class may look like following:
+
+```php
+use yii2tech\embedded\ContainerInterface;
+use yii2tech\embedded\ContainerTrait;
+
+class ActiveRecord extends \yii\mongodb\ActiveRecord implements ContainerInterface
+{
+    use ContainerTrait;
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        $this->refreshFromEmbedded(); // populate this model attributes from embedded models' ones, ensuring they are marked as 'changed' before saving
+        return true;
     }
 }
 ```
