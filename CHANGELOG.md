@@ -1,7 +1,7 @@
 Yii 2 Embedded (Nested) Models extension Change Log
 ===================================================
 
-1.0.1 under development
+1.0.1, October 17, 2016
 -----------------------
 
 - Enh #8: Added `Validator::initializedOnly` option allowing skip validation for not initialized embedded models (klimov-paul)
