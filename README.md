@@ -61,7 +61,7 @@ class User extends Model implements ContainerInterface
 {
     use ContainerTrait;
 
-    public $profileData = [];
+    public $profileData = []; // Declare variable inside model is important
     public $commentsData = [];
 
     public function embedProfile()
