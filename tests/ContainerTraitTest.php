@@ -193,4 +193,36 @@ class ContainerTraitTest extends TestCase
         $embedded = $container->getEmbedded('null');
         $this->assertNotNull($container->modelData);
     }
+
+    /**
+     * @depends testFillUpEmbed
+     */
+    public function testIsset()
+    {
+        $container = new Container();
+        $container->modelData = [
+            'name1' => 'value1',
+            'name2' => 'value2',
+        ];
+        $this->assertFalse(isset($container->model));
+
+        $container->getEmbedded('model');
+        $this->assertTrue(isset($container->model));
+    }
+
+    /**
+     * @depends testIsset
+     */
+    public function testUnset()
+    {
+        $container = new Container();
+        $container->modelData = [
+            'name1' => 'value1',
+            'name2' => 'value2',
+        ];
+        $container->getEmbedded('model');
+
+        unset($container->model);
+        $this->assertFalse(isset($container->model));
+    }
 }

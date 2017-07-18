@@ -113,7 +113,7 @@ trait ContainerTrait
     public function __isset($name)
     {
         if (isset($this->_embedded[$name])) {
-            return ($this->_embedded[$name]->getValue($this) === null);
+            return ($this->_embedded[$name]->getValue($this) !== null);
         }
         return parent::__isset($name);
     }
