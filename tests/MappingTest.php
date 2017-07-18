@@ -17,7 +17,7 @@ class MappingTest extends TestCase
         $mapping->setValue($value);
         $this->assertSame($value, $mapping->getValue($owner));
 
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->expectException('yii\base\InvalidParamException');
         $mapping->setValue('foo');
     }
 
@@ -36,7 +36,7 @@ class MappingTest extends TestCase
         $actualValue = $mapping->getValue($owner);
         $this->assertTrue($actualValue instanceof \ArrayAccess);
 
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->expectException('yii\base\InvalidParamException');
         $mapping->setValue('foo');
     }
 
