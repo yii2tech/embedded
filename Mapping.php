@@ -19,7 +19,7 @@ use yii\helpers\ArrayHelper;
  *
  * @see ContainerTrait
  *
- * @property boolean $isValueInitialized whether embedded value has been already initialized or not.
+ * @property bool $isValueInitialized whether embedded value has been already initialized or not.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
@@ -35,16 +35,16 @@ class Mapping extends Object
      */
     public $target;
     /**
-     * @var boolean whether list of objects should match the source value.
+     * @var bool whether list of objects should match the source value.
      */
     public $multiple;
     /**
-     * @var boolean whether to create empty object or list of objects, if the source field is null.
+     * @var bool whether to create empty object or list of objects, if the source field is null.
      * If disabled [[getValue()]] will produce `null` value from null source.
      */
     public $createFromNull = true;
     /**
-     * @var boolean whether to set `null` for the owner [[source]] field, after the embedded value created.
+     * @var bool whether to set `null` for the owner [[source]] field, after the embedded value created.
      * While enabled this saves memory usage, but also makes it impossible to use embedded and raw value at the same time.
      */
     public $unsetSource = true;
@@ -97,7 +97,7 @@ class Mapping extends Object
     }
 
     /**
-     * @return boolean whether embedded value has been already initialized or not.
+     * @return bool whether embedded value has been already initialized or not.
      * @since 1.0.1
      */
     public function getIsValueInitialized()

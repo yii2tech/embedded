@@ -2,7 +2,7 @@ Embedded (Nested) Models Extension for Yii 2
 ============================================
 
 This extension provides support for embedded (nested) models usage in Yii2.
-In particular it allows working with sub-documents in MongoDB and ElasticSearch.
+In particular it allows working with sub-documents in [MongoDB](https://github.com/yiisoft/yii2-mongodb) and [ElasticSearch](https://github.com/yiisoft/yii2-elasticsearch).
 
 For license information check the [LICENSE](LICENSE.md)-file.
 
@@ -223,7 +223,7 @@ if ($user->load(Yii::$app->request->post()) && $user->contact->load(Yii::$app->r
 ```
 
 > Note: pay attention that [[\yii2tech\embedded\Validator]] must be set for the embedded model name - not for its
-  source attribute. Do not mix them up.
+  source attribute. Do not mix them up!
 
 You can enable [[\yii2tech\embedded\Validator::$initializedOnly]], allowing to skip validation for the embedded model, if
 it has not bee initialized, e.g. requested at least once. This will save the performance in case source model can be used

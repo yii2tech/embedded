@@ -39,7 +39,7 @@ interface ContainerInterface
     /**
      * Checks if asked embedded declaration exists.
      * @param string $name embedded name
-     * @return boolean whether embedded declaration exists.
+     * @return bool whether embedded declaration exists.
      */
     public function hasEmbedded($name);
 

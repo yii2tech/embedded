@@ -49,6 +49,9 @@ use yii\base\Model;
  * }
  * ```
  *
+ * > Note: pay attention that this validator must be set for the embedded model name - not for its source attribute.
+ * Do not mix them up!
+ *
  * @see ContainerInterface
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
@@ -57,11 +60,11 @@ use yii\base\Model;
 class Validator extends \yii\validators\Validator
 {
     /**
-     * @var boolean whether to add an error message to embedded source attribute instead of embedded name itself.
+     * @var bool whether to add an error message to embedded source attribute instead of embedded name itself.
      */
     public $addErrorToSource = true;
     /**
-     * @var boolean whether to run validation only in case embedded model(s) has been already initialized (requested as
+     * @var bool whether to run validation only in case embedded model(s) has been already initialized (requested as
      * object at least once). This option is disabled by default.
      *
      * @see Mapping::getIsValueInitialized()
