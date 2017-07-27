@@ -1,5 +1,10 @@
-Embedded (Nested) Models Extension for Yii 2
-============================================
+<p align="center">
+    <a href="https://github.com/yii2tech" target="_blank">
+        <img src="https://avatars2.githubusercontent.com/u/12951949" height="100px">
+    </a>
+    <h1 align="center">Embedded (Nested) Models Extension for Yii 2</h1>
+    <br>
+</p>
 
 This extension provides support for embedded (nested) models usage in Yii2.
 In particular it allows working with sub-documents in [MongoDB](https://github.com/yiisoft/yii2-mongodb) and [ElasticSearch](https://github.com/yiisoft/yii2-elasticsearch).
