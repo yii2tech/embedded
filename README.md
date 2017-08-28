@@ -48,7 +48,7 @@ For each embedded entity a mapping declaration should be provided.
 In order to do so you need to declare method, which name is prefixed with 'embedded', which
 should return the [[Mapping]] instance. You may use [[hasEmbedded()]] and [[hasEmbeddedList()]] for this.
 
-Per each of source field or property a new virtual property will declared, which name will be composed
+Per each of source field or property a new virtual property will be declared, which name will be composed
 by removing 'embedded' prefix from the declaration method name.
 
 > Note: watch for the naming collisions: if you have a source property named 'profile' the mapping declaration
@@ -102,7 +102,7 @@ You can control this behavior via [[\yii2tech\embedded\Mapping::$unsetSource]].
 
 Embedded objects allow simplification of nested data processing, but usually they know nothing about their source
 data meaning and global processing. For example: nested object is not aware if its source data comes from database
-and it does not know how this data should saved. Such functionality usually is handled by container object.
+and it does not know how this data should be saved. Such functionality usually is handled by container object.
 Thus at some point you will need to convert data from embedded objects back to its raw format, which allows its
 native processing like saving. This can be done using method `refreshFromEmbedded()`:
 
@@ -231,7 +231,7 @@ if ($user->load(Yii::$app->request->post()) && $user->contact->load(Yii::$app->r
   source attribute. Do not mix them up!
 
 You can enable [[\yii2tech\embedded\Validator::$initializedOnly]], allowing to skip validation for the embedded model, if
-it has not bee initialized, e.g. requested at least once. This will save the performance in case source model can be used
+it has not been initialized, e.g. requested at least once. This will save the performance in case source model can be used
 in different scenarios, some of which may not require embedded model manipulations. However, in this case embedded source
 attribute value will not be validated. You should ensure it validated in other way or it is 'unsafe' for population via
 [[\yii\base\Model::load()]] method.
