@@ -2,7 +2,7 @@
 
 namespace yii2tech\tests\unit\embedded\data;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii2tech\embedded\ContainerInterface;
 use yii2tech\embedded\ContainerTrait;
 
@@ -14,7 +14,7 @@ use yii2tech\embedded\ContainerTrait;
  * @property \stdClass[] $nullAutoCreate
  * @property \stdClass[]|null $nullList
  */
-class Container extends Object implements ContainerInterface
+class Container extends BaseObject implements ContainerInterface
 {
     use ContainerTrait;
 

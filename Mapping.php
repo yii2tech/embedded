@@ -9,7 +9,7 @@ namespace yii2tech\embedded;
 
 use ArrayObject;
 use yii\base\InvalidParamException;
-use yii\base\Object;
+use yii\base\BaseObject;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -24,7 +24,7 @@ use yii\helpers\ArrayHelper;
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-class Mapping extends Object
+class Mapping extends BaseObject
 {
     /**
      * @var string name of the container source field or property.

@@ -5,6 +5,7 @@ Yii 2 Embedded (Nested) Models extension Change Log
 -----------------------
 
 - Bug #16: Fixed `ContainerTrait::__isset()` returns incorrect result for embedded model properties (rodion-k)
+- Bug: Usage of deprecated `yii\base\Object` changed to `yii\base\BaseObject` allowing compatibility with PHP 7.2 (klimov-paul)
 
 
 1.0.1, October 17, 2016
