@@ -1,7 +1,7 @@
 Yii 2 Embedded (Nested) Models extension Change Log
 ===================================================
 
-1.0.2 under development
+1.0.2, November 3, 2017
 -----------------------
 
 - Bug #16: Fixed `ContainerTrait::__isset()` returns incorrect result for embedded model properties (rodion-k)
