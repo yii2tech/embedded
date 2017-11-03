@@ -25,7 +25,7 @@ class ActiveRecord extends \yii\elasticsearch\ActiveRecord implements ContainerI
     use ContainerTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function beforeSave($insert)
     {

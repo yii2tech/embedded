@@ -75,7 +75,7 @@ class Validator extends \yii\validators\Validator
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -86,7 +86,7 @@ class Validator extends \yii\validators\Validator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validateAttribute($model, $attribute)
     {

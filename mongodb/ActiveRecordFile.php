@@ -25,7 +25,7 @@ class ActiveRecordFile extends \yii\mongodb\file\ActiveRecord implements Contain
     use ContainerTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function beforeSave($insert)
     {

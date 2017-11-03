@@ -25,7 +25,7 @@ class ActiveRecord extends \yii\mongodb\ActiveRecord implements ContainerInterfa
     use ContainerTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function beforeSave($insert)
     {
