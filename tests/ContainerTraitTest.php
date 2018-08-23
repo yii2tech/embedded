@@ -2,6 +2,7 @@
 
 namespace yii2tech\tests\unit\embedded;
 
+use ArrayObject;
 use yii2tech\embedded\ContainerTrait;
 use yii2tech\tests\unit\embedded\data\Container;
 
@@ -224,5 +225,38 @@ class ContainerTraitTest extends TestCase
 
         unset($container->model);
         $this->assertFalse(isset($container->model));
+    }
+
+    /**
+     * @depends testFillUpEmbed
+     * @depends testFillUpEmbedList
+     */
+    public function testFillUpEmbedFromTraversable()
+    {
+        $container = new Container();
+        $container->modelData = new ArrayObject([
+            'name1' => 'value1',
+            'name2' => 'value2',
+        ]);
+        $this->assertTrue($container->getEmbedded('model') instanceof \stdClass);
+        $this->assertTrue($container->getEmbedded('model') === $container->model);
+        $this->assertEquals('value1', $container->model->name1);
+        $this->assertEquals('value2', $container->model->name2);
+
+        $container = new Container();
+        $container->listData = new ArrayObject([
+            [
+                'name' => 'name1',
+            ],
+            [
+                'name' => 'name2',
+            ],
+        ]);
+        $this->assertTrue($container->getEmbedded('list') === $container->list);
+        $this->assertTrue($container->list[0] instanceof \stdClass);
+        $this->assertTrue($container->list[1] instanceof \stdClass);
+
+        $this->assertEquals('name1', $container->list[0]->name);
+        $this->assertEquals('name2', $container->list[1]->name);
     }
 }

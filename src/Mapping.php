@@ -8,6 +8,7 @@
 namespace yii2tech\embedded;
 
 use ArrayObject;
+use Traversable;
 use yii\base\InvalidArgumentException;
 use yii\base\BaseObject;
 use Yii;
@@ -136,7 +137,10 @@ class Mapping extends BaseObject
             }
         } else {
             if (!is_array($sourceValue)) {
-                throw new InvalidArgumentException("Source value for the embedded should be an array.");
+                if (!$sourceValue instanceof Traversable) {
+                    throw new InvalidArgumentException("Source value for the embedded should be an array or 'Traversable' instance.");
+                }
+                $sourceValue = iterator_to_array($sourceValue);
             }
             $result = Yii::createObject(array_merge($targetConfig, $sourceValue));
         }

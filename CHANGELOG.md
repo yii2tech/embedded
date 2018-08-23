@@ -5,6 +5,7 @@ Yii 2 Embedded (Nested) Models extension Change Log
 -----------------------
 
 - Enh #19: Usage of deprecated `yii\base\InvalidParamException` changed to `yii\base\InvalidArgumentException` ones (klimov-paul)
+- Enh #20: Added support for `Traversable` instances as the embedded source (klimov-paul)
 
 
 1.0.2, November 3, 2017
