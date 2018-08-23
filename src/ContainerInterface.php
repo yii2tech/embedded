@@ -57,7 +57,7 @@ interface ContainerInterface
     /**
      * Returns mapping information about specified embedded entity.
      * @param string $name embedded name.
-     * @throws \yii\base\InvalidParamException if specified embedded does not exists.
+     * @throws \yii\base\InvalidArgumentException if specified embedded does not exists.
      * @throws \yii\base\InvalidConfigException on invalid mapping declaration.
      * @return Mapping embedded mapping.
      */

@@ -8,7 +8,7 @@
 namespace yii2tech\embedded;
 
 use ArrayObject;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\base\BaseObject;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -58,7 +58,7 @@ class Mapping extends BaseObject
     /**
      * Sets the embedded value.
      * @param array|object|null $value actual value.
-     * @throws InvalidParamException on invalid argument
+     * @throws InvalidArgumentException on invalid argument
      */
     public function setValue($value)
     {
@@ -71,11 +71,11 @@ class Mapping extends BaseObject
                     }
                     $value = $arrayObject;
                 } elseif (!($value instanceof \ArrayAccess)) {
-                    throw new InvalidParamException("Value should either an array or a null, '" . gettype($value) . "' given.");
+                    throw new InvalidArgumentException("Value should either an array or a null, '" . gettype($value) . "' given.");
                 }
             } else {
                 if (!is_object($value)) {
-                    throw new InvalidParamException("Value should either an object or a null, '" . gettype($value) . "' given.");
+                    throw new InvalidArgumentException("Value should either an object or a null, '" . gettype($value) . "' given.");
                 }
             }
         }
@@ -107,7 +107,7 @@ class Mapping extends BaseObject
 
     /**
      * @param object $owner owner object
-     * @throws InvalidParamException on invalid source.
+     * @throws InvalidArgumentException on invalid source.
      * @return array|null|object value.
      */
     private function createValue($owner)
@@ -130,13 +130,13 @@ class Mapping extends BaseObject
             $result = new ArrayObject();
             foreach ($sourceValue as $key => $frame) {
                 if (!is_array($frame)) {
-                    throw new InvalidParamException("Source value for the embedded should be an array.");
+                    throw new InvalidArgumentException("Source value for the embedded should be an array.");
                 }
                 $result[$key] = Yii::createObject(array_merge($targetConfig, $frame));
             }
         } else {
             if (!is_array($sourceValue)) {
-                throw new InvalidParamException("Source value for the embedded should be an array.");
+                throw new InvalidArgumentException("Source value for the embedded should be an array.");
             }
             $result = Yii::createObject(array_merge($targetConfig, $sourceValue));
         }

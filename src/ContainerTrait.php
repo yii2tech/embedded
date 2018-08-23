@@ -8,7 +8,7 @@
 namespace yii2tech\embedded;
 
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use Yii;
 
 /**
@@ -77,7 +77,7 @@ trait ContainerTrait
      * This method is overridden so that embedded objects can be accessed like properties.
      *
      * @param string $name property name
-     * @throws \yii\base\InvalidParamException if relation name is wrong
+     * @throws \yii\base\InvalidArgumentException if relation name is wrong
      * @return mixed property value
      * @see getAttribute()
      */
@@ -156,7 +156,7 @@ trait ContainerTrait
     /**
      * Returns mapping information about specified embedded entity.
      * @param string $name embedded name.
-     * @throws \yii\base\InvalidParamException if specified embedded does not exists.
+     * @throws \yii\base\InvalidArgumentException if specified embedded does not exists.
      * @throws \yii\base\InvalidConfigException on invalid mapping declaration.
      * @return Mapping embedded mapping.
      */
@@ -165,7 +165,7 @@ trait ContainerTrait
         if (!isset($this->_embedded[$name])) {
             $method = $this->composeEmbeddedDeclarationMethodName($name);
             if (!method_exists($this, $method)) {
-                throw new InvalidParamException("'" . get_class($this) . "' has no declaration ('{$method}()') for the embedded '{$name}'");
+                throw new InvalidArgumentException("'" . get_class($this) . "' has no declaration ('{$method}()') for the embedded '{$name}'");
             }
             $mapping = call_user_func([$this, $method]);
             if (!$mapping instanceof Mapping) {

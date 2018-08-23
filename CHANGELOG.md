@@ -1,6 +1,12 @@
 Yii 2 Embedded (Nested) Models extension Change Log
 ===================================================
 
+1.0.3 under development
+-----------------------
+
+- Enh #19: Usage of deprecated `yii\base\InvalidParamException` changed to `yii\base\InvalidArgumentException` ones (klimov-paul)
+
+
 1.0.2, November 3, 2017
 -----------------------
 
@@ -11,7 +17,7 @@ Yii 2 Embedded (Nested) Models extension Change Log
 1.0.1, October 17, 2016
 -----------------------
 
-- Enh #8: Added `Validator::initializedOnly` option allowing skip validation for not initialized embedded models (klimov-paul)
+- Enh #8: Added `Validator::$initializedOnly` option allowing skip validation for not initialized embedded models (klimov-paul)
 
 
 1.0.0, December 26, 2015
