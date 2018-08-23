@@ -7,7 +7,8 @@
 </p>
 
 This extension provides support for embedded (nested) models usage in Yii2.
-In particular it allows working with sub-documents in [MongoDB](https://github.com/yiisoft/yii2-mongodb) and [ElasticSearch](https://github.com/yiisoft/yii2-elasticsearch).
+In particular it allows working with sub-documents in [MongoDB](https://github.com/yiisoft/yii2-mongodb) and [ElasticSearch](https://github.com/yiisoft/yii2-elasticsearch)
+as well as processing complex JSON attributes at relational databases.
 
 For license information check the [LICENSE](LICENSE.md)-file.
 
