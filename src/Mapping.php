@@ -179,9 +179,14 @@ class Mapping extends BaseObject
      * @param object $object
      * @return array
      */
-    private function extractObjectValues($object)
+    protected function extractObjectValues($object)
     {
-        $values = ArrayHelper::toArray($object, [], false);
+        if ($object instanceof yii\base\Model) { 
+            $values = $object->getAttributes();
+        } else {
+            $values = ArrayHelper::toArray($object, [], false);
+        }
+        
         if ($object instanceof ContainerInterface) {
             $values = array_merge($values, $object->getEmbeddedValues());
         }
